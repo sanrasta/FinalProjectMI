@@ -5,8 +5,10 @@ import cv2
 ##
 # Objective: Simulate different types of acquisition patterns by implementing the
 # following functions.
-##
-
+# You can indeed use opencv functions for the ellipse, radial and spiral pattern
+### also for generating GUIs and Presenting the output of your work,(displaying)
+# convolution function to display (multiply convolute telnet
+#inverse random transform, random transform
 def cartesianPattern(mask_size, percent):
     mask = None
     return mask

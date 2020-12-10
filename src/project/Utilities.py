@@ -1,22 +1,28 @@
 import cv2
 import numpy as np
 
+import numpy.random as rand
+import math
 
 def loadImage(image_path):
-    image = None
+    print(image_path)
+    image = cv2.imread(image_path, 0)
     return image
 
 
 def loadMatrix(filename):
     matrix = None
+
     return matrix
 
 
 def saveImage(filename, image):
+
     return True
 
 
 def saveMatrix(filename, matrix):
+
     return True
 
 
@@ -43,10 +49,13 @@ def displayImage(image):
 
 
 def getDFT(image):
+    newMatrix = None
+
+
     return None
 
 
-# Confert from fft matrix to an image"
+# Convert from fft matrix to an image"
 def getImage(dft_img):
     return None
 
@@ -60,7 +69,7 @@ def signalToNoise():
     return False
 
 
-#[Provide] Use this function to acomplish a good final image
+# [Provide] Use this function to acomplish a good final image
 def post_process_image(image):
     a = np.min(image)
     b = np.max(image)
