@@ -7,8 +7,8 @@ import math
 def loadImage(image_path):
     print(image_path)
     image = cv2.imread(image_path, 0)
-    cv2.imshow("image",image)
-    cv2.waitKey()
+    #cv2.imshow("image",image)
+    #cv2.waitKey()
     return image
 
 
