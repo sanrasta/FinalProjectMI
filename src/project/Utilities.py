@@ -1,4 +1,5 @@
 import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 
 import numpy.random as rand
@@ -37,6 +38,7 @@ def normalizeImage(image):
 # Remember: the DFT its a decomposition of signals
 #  To be able to save it as an image you must convert it.
 def writableDFT(dft_image):
+
     converted = None
     return converted
 

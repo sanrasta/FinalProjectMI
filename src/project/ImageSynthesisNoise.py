@@ -1,17 +1,21 @@
 import numpy as np
 import math
+import cv2
+
+
+def distance(point1, point2):
+    return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
 
 
 def idealLowpassFilter(emptymask, cutoff):
-    P = emptymask[0]
-    Q = emptymask[1]
+    rows, cols = emptymask
     d0 = cutoff
-
+    center = (rows / 2, cols / 2)
     mask = np.zeros(emptymask) * 255
-    for u in range(P):
-        for v in range(Q):
-            # distance from point(u,v)
-            D = (math.sqrt(math.pow(u - P / 2, 2) + math.pow(v - Q / 2, 2)))
+    for u in range(rows):
+        for v in range(cols):
+            # distance center to point(u,v)
+            D = distance((u, v), center)
             if D <= d0:
                 mask[u, v] = 255
             else:
@@ -20,68 +24,46 @@ def idealLowpassFilter(emptymask, cutoff):
 
 
 def idealHighpassFilter(emptymask, cutoff):
-    return 1. - idealLowpassFilter(emptymask, cutoff)
+    return 1 - idealLowpassFilter(emptymask, cutoff)
 
 
 def gaussianLowpassFilter(emptymask, cutoff):
-    P = emptymask[0]
-    Q = emptymask[1]
-    d0 = cutoff
     mask = np.zeros(emptymask) * 255
-
-    for u in range(P):
-        for v in range(Q):
-            D = (math.sqrt(math.pow(u - P / 2, 2) + math.pow(v - Q / 2, 2)))
-            mask[u, v] = math.exp(math.pow(-D, 2) / 2 * (math.pow(d0, 2)))
-
+    rows, cols = emptymask
+    center = (rows / 2, cols / 2)
+    for u in range(cols):
+        for v in range(rows):
+            mask[u, v] = math.exp(((-distance((u, v), center) ** 2) / (2 * (cutoff ** 2))))
     return mask
 
 
 def gaussianHighpassFilter(emptymask, cutoff):
-    P = emptymask[0]
-    Q = emptymask[1]
     mask = np.zeros(emptymask) * 255
-    d0 = cutoff
-    for u in range(P):
-        for v in range(Q):
-            D = (math.sqrt(math.pow(u - P / 2, 2) + math.pow(v - Q / 2, 2)))
-
-            mask[u, v] =  math.exp(math.pow(-D, 2) / 2 * (math.pow(d0, 2)))
-
+    rows, cols = emptymask
+    center = (rows / 2, cols / 2)
+    for u in range(cols):
+        for v in range(rows):
+            emptymask[u, v] = 1 - math.exp(((-distance((u, v), center) ** 2) / (2 * (cutoff ** 2))))
     return mask
 
 
 def butterworthLowpassFilter(emptymask, cutoff, order):
-    P = emptymask[0]
-    Q = emptymask[1]
-    mask = np.zeros(emptymask) * 255
-    d0 = cutoff
-    n = order
-    for u in range(P):
-        for v in range(Q):
-            D = (math.sqrt(math.pow(u - P / 2, 2) + math.pow(v - Q / 2, 2)))
-            # cover divide by 0 scenario
-            if D == 0:
-                mask[u, v] = 0
-            else:
-                mask[u, v] = 1 * 255 / 1 + (math.pow((d0 / D), 2 * n))
+    mask = np.zeros(emptymask[:2])
+    rows, cols = emptymask[:2]
+    center = (rows / 2, cols / 2)
+    for x in range(cols):
+        for y in range(rows):
+            mask[y, x] = 1 / (1 + (distance((y, x), center) / cutoff) ** (2 * order))
     return mask
 
 
 def butterworthHighpassFilter(emptymask, cutoff, order):
-    P = emptymask[0]
-    Q = emptymask[1]
-    mask = np.zeros(emptymask) * 255
-    d0 = cutoff
-    n = order
-    for u in range(P):
-        for v in range(Q):
-            D = (math.sqrt(math.pow(u - P / 2, 2) + math.pow(v - Q / 2, 2)))
-            # cover divide by 0 scenario
-            if D == 0:
-                mask[u, v] = 0
-            else:
-                mask[u, v] = 1 * 255 / 1 + (math.pow((D / d0), 2 * n))
+    mask = np.zeros(emptymask[:2])
+    rows, cols = emptymask[:2]
+    center = (rows / 2, cols / 2)
+    for x in range(cols):
+        for y in range(rows):
+            mask[y, x] = 1 * 255 - 1 / (1 + (distance((y, x), center) / cutoff) ** (2 * order))
     return mask
 
 
