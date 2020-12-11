@@ -1,6 +1,8 @@
 from test.setup import EvaluationSetup
 import unittest
 import src.project.SelectiveImageAcquisition as aqc
+import numpy as np
+import cv2
 
 
 class SelectiveImageAcquisitionTests(unittest.TestCase):
