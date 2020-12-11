@@ -37,6 +37,7 @@ class Utilities(unittest.TestCase):
         input = self.setup.getInputMatrix('chaplin_dft.npy')
 
         self.actual = util.getImage(input)
+
         self.assertTrue(self.setup.imagesEqual(expected, self.actual))
 
 
@@ -54,6 +55,8 @@ class Utilities(unittest.TestCase):
         input = self.setup.getInputMatrix('noisy_dft.npy')
 
         self.actual = util.getImage(input)
+        #cv2.imshow("image",self.actual)
+        #cv2.waitKey(0)
         self.assertTrue(self.setup.imagesEqual(expected, self.actual))
 
 

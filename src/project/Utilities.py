@@ -7,28 +7,30 @@ import math
 def loadImage(image_path):
     print(image_path)
     image = cv2.imread(image_path, 0)
+    cv2.imshow("image",image)
+    cv2.waitKey()
     return image
 
 
 def loadMatrix(filename):
-    matrix = None
+    matrix = cv2.imread(filename, 0)
 
     return matrix
 
 
 def saveImage(filename, image):
-
-    return True
+    return cv2.imwrite(filename, image)
 
 
 def saveMatrix(filename, matrix):
-
-    return True
+    return cv2.imwrite(filename, matrix)
 
 
 # map input image to values from 0 to 255"
 def normalizeImage(image):
-    normalized = None
+    height, width = image.shape
+    normalized = np.zeros((height, width))
+    normalized = cv2.normalize(image, normalized, 0, 255, cv2.NORM_MINMAX)
     return normalized
 
 
@@ -49,15 +51,17 @@ def displayImage(image):
 
 
 def getDFT(image):
-    newMatrix = None
-
-
-    return None
+    newMatrix = np.fft.fft2(image)
+    image_dft = np.fft.fftshift(newMatrix)
+    return image_dft
 
 
 # Convert from fft matrix to an image"
-def getImage(dft_img):
-    return None
+def getImage(image_dft):
+    dft_unshifted = np.fft.ifftshift(image_dft)
+    image_reverse_fft = np.fft.ifft2(dft_unshifted)
+    img_back = np.abs(image_reverse_fft)
+    return img_back
 
 
 # Both input values must be raw values"
