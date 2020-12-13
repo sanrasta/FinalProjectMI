@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-import src.project.ImageSynthesisNoise as noise
 import src.project.SelectiveImageAcquisition as aqc
 import src.project.Utilities as util
 
