@@ -44,36 +44,39 @@ def ellipsePattern(mask_size, major_axis, minor_axis, angle):
 def bandPattern(mask_size, width, length, angle):
     mask = np.zeros((mask_size[0], mask_size[1]))
     angle = -angle*np.pi/180
+    length = np.abs(length)
+    width = np.abs(width)
     midpoint_x = (mask_size[0] / 2)
     midpoint_y = (mask_size[1] / 2)
-    pt1_x_float = (midpoint_x - (np.abs(length) / 2))
-    pt1_y_float = (midpoint_y + (np.abs(width) / 2))
-    pt2_x_float = (midpoint_x - (np.abs(length) / 2))
-    pt2_y_float = (midpoint_y - (np.abs(width) / 2))
-    pt3_x_float = (midpoint_x + (np.abs(length) / 2))
-    pt3_y_float = (midpoint_y - (np.abs(width) / 2))
-    pt4_x_float = (midpoint_x + (np.abs(length) / 2))
-    pt4_y_float = (midpoint_y + (np.abs(width) / 2))
-    print([pt1_x_float,pt1_y_float,pt2_x_float,pt2_y_float,pt3_x_float,pt3_y_float,pt4_x_float,pt4_y_float])
+    pt1_x_float = (midpoint_x - (length / 2))
+    pt1_y_float = (midpoint_y + (width / 2))
+    pt2_x_float = (midpoint_x - (length / 2))
+    pt2_y_float = (midpoint_y - (width / 2))
+    pt3_x_float = (midpoint_x + (length / 2))
+    pt3_y_float = (midpoint_y - (width / 2))
+    pt4_x_float = (midpoint_x + (length / 2))
+    pt4_y_float = (midpoint_y + (width / 2))
+    #print([pt1_x_float, pt1_y_float, pt2_x_float, pt2_y_float, pt3_x_float, pt3_y_float, pt4_x_float, pt4_y_float])
     # Point 1
-    pt1_rotated_x = np.cos(angle) * (pt1_x_float - midpoint_y) - np.sin(angle) * (pt1_y_float - midpoint_y) + midpoint_x
-    pt1_rotated_y = np.sin(angle) * (pt1_x_float - midpoint_x) + np.cos(angle) * (pt1_y_float - midpoint_y) + midpoint_y
+    pt1_rotated_x = round(np.cos(angle) * (pt1_x_float - midpoint_y) - np.sin(angle) * (pt1_y_float - midpoint_y) + midpoint_x, 0)
+    pt1_rotated_y = round(np.sin(angle) * (pt1_x_float - midpoint_x) + np.cos(angle) * (pt1_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 2
-    pt2_rotated_x = np.cos(angle) * (pt2_x_float - midpoint_y) - np.sin(angle) * (pt2_y_float - midpoint_y) + midpoint_x
-    pt2_rotated_y = np.sin(angle) * (pt2_x_float - midpoint_x) + np.cos(angle) * (pt2_y_float - midpoint_y) + midpoint_y
+    pt2_rotated_x = round(np.cos(angle) * (pt2_x_float - midpoint_y) - np.sin(angle) * (pt2_y_float - midpoint_y) + midpoint_x, 0)
+    pt2_rotated_y = round(np.sin(angle) * (pt2_x_float - midpoint_x) + np.cos(angle) * (pt2_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 3
-    pt3_rotated_x = np.cos(angle) * (pt3_x_float - midpoint_y) - np.sin(angle) * (pt3_y_float - midpoint_y) + midpoint_x
-    pt3_rotated_y = np.sin(angle) * (pt3_x_float - midpoint_x) + np.cos(angle) * (pt3_y_float - midpoint_y) + midpoint_y
+    pt3_rotated_x = round(np.cos(angle) * (pt3_x_float - midpoint_y) - np.sin(angle) * (pt3_y_float - midpoint_y) + midpoint_x, 0)
+    pt3_rotated_y = round(np.sin(angle) * (pt3_x_float - midpoint_x) + np.cos(angle) * (pt3_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 4
-    pt4_rotated_x = np.cos(angle) * (pt4_x_float - midpoint_y) - np.sin(angle) * (pt4_y_float - midpoint_y) + midpoint_x
-    pt4_rotated_y = np.sin(angle) * (pt4_x_float - midpoint_x) + np.cos(angle) * (pt4_y_float - midpoint_y) + midpoint_y
-
-    pts = np.array([[pt1_rotated_x, pt1_rotated_y],[pt2_rotated_x,pt2_rotated_y],[pt3_rotated_x,pt3_rotated_y],[pt4_rotated_x,pt4_rotated_y]], dtype=np.int32)
-    pts.reshape((-1,1,2))
-    cv2.fillPoly(mask,[pts],1)
+    pt4_rotated_x = round(np.cos(angle) * (pt4_x_float - midpoint_y) - np.sin(angle) * (pt4_y_float - midpoint_y) + midpoint_x, 0)
+    pt4_rotated_y = round(np.sin(angle) * (pt4_x_float - midpoint_x) + np.cos(angle) * (pt4_y_float - midpoint_y) + midpoint_y, 0)
+    #print([pt1_rotated_x, pt1_rotated_y, pt2_rotated_x, pt2_rotated_y, pt3_rotated_x, pt3_rotated_y, pt4_rotated_x,pt4_rotated_y])
+    pts = np.array([[pt1_rotated_x, pt1_rotated_y], [pt2_rotated_x, pt2_rotated_y], [pt3_rotated_x, pt3_rotated_y],[pt4_rotated_x, pt4_rotated_y]], dtype=np.int32)
+    pts.reshape((-1, 1, 2))
+    #print(pts)
+    cv2.fillPoly(mask, [pts], 1)
 
     return mask
 
