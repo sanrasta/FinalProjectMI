@@ -11,11 +11,13 @@ import math
 #inverse random transform, random transform
 def cartesianPattern(mask_size, percent):
     mask = np.zeros((mask_size[0], mask_size[1]))
-    rows = int(mask_size[1] * percent)
+    rows = int(mask_size[0] * (percent/100))
+    print(rows)
     #rows = mask_size[1] * percent
-    row_distance = int(mask_size[1] / rows)
+    row_distance = int(mask_size[0] / rows)
+    print(row_distance)
     #row_distance = mask_size[1] / rows
-    distance_crossed = 0
+    distance_crossed = 1
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
     # distance_crossed += 5
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
