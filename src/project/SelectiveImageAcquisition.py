@@ -11,11 +11,13 @@ import math
 #inverse random transform, random transform
 def cartesianPattern(mask_size, percent):
     mask = np.zeros((mask_size[0], mask_size[1]))
-    rows = int(mask_size[1] * percent)
+    rows = int(mask_size[0] * (percent/100))
+    print(rows)
     #rows = mask_size[1] * percent
-    row_distance = int(mask_size[1] / rows)
+    row_distance = int(mask_size[0] / rows)
+    print(row_distance)
     #row_distance = mask_size[1] / rows
-    distance_crossed = 0
+    distance_crossed = 1
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
     # distance_crossed += 5
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
@@ -43,34 +45,34 @@ def ellipsePattern(mask_size, major_axis, minor_axis, angle):
 
 def bandPattern(mask_size, width, length, angle):
     mask = np.zeros((mask_size[0], mask_size[1]))
-    angle = -angle*np.pi/180
+    angle = -(90+angle)*np.pi/180
     length = np.abs(length)
     width = np.abs(width)
-    midpoint_x = (mask_size[0] / 2)
-    midpoint_y = (mask_size[1] / 2)
-    pt1_x_float = (midpoint_x - (length / 2))
-    pt1_y_float = (midpoint_y + (width / 2))
-    pt2_x_float = (midpoint_x - (length / 2))
-    pt2_y_float = (midpoint_y - (width / 2))
-    pt3_x_float = (midpoint_x + (length / 2))
-    pt3_y_float = (midpoint_y - (width / 2))
-    pt4_x_float = (midpoint_x + (length / 2))
-    pt4_y_float = (midpoint_y + (width / 2))
-    #print([pt1_x_float, pt1_y_float, pt2_x_float, pt2_y_float, pt3_x_float, pt3_y_float, pt4_x_float, pt4_y_float])
+    midpoint_x = (mask_size[1] / 2)
+    midpoint_y = (mask_size[0] / 2)
+    pt1_x_float = (midpoint_x - (width / 2))
+    pt1_y_float = (midpoint_y + (length / 2))
+    pt2_x_float = (midpoint_x - (width / 2))
+    pt2_y_float = (midpoint_y - (length / 2))
+    pt3_x_float = (midpoint_x + (width / 2))
+    pt3_y_float = (midpoint_y - (length / 2))
+    pt4_x_float = (midpoint_x + (width / 2))
+    pt4_y_float = (midpoint_y + (length / 2))
+
     # Point 1
-    pt1_rotated_x = round(np.cos(angle) * (pt1_x_float - midpoint_y) - np.sin(angle) * (pt1_y_float - midpoint_y) + midpoint_x, 0)
+    pt1_rotated_x = round(np.cos(angle) * (pt1_x_float - midpoint_x) - np.sin(angle) * (pt1_y_float - midpoint_y) + midpoint_x, 0)
     pt1_rotated_y = round(np.sin(angle) * (pt1_x_float - midpoint_x) + np.cos(angle) * (pt1_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 2
-    pt2_rotated_x = round(np.cos(angle) * (pt2_x_float - midpoint_y) - np.sin(angle) * (pt2_y_float - midpoint_y) + midpoint_x, 0)
+    pt2_rotated_x = round(np.cos(angle) * (pt2_x_float - midpoint_x) - np.sin(angle) * (pt2_y_float - midpoint_y) + midpoint_x, 0)
     pt2_rotated_y = round(np.sin(angle) * (pt2_x_float - midpoint_x) + np.cos(angle) * (pt2_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 3
-    pt3_rotated_x = round(np.cos(angle) * (pt3_x_float - midpoint_y) - np.sin(angle) * (pt3_y_float - midpoint_y) + midpoint_x, 0)
+    pt3_rotated_x = round(np.cos(angle) * (pt3_x_float - midpoint_x) - np.sin(angle) * (pt3_y_float - midpoint_y) + midpoint_x, 0)
     pt3_rotated_y = round(np.sin(angle) * (pt3_x_float - midpoint_x) + np.cos(angle) * (pt3_y_float - midpoint_y) + midpoint_y, 0)
 
     # Point 4
-    pt4_rotated_x = round(np.cos(angle) * (pt4_x_float - midpoint_y) - np.sin(angle) * (pt4_y_float - midpoint_y) + midpoint_x, 0)
+    pt4_rotated_x = round(np.cos(angle) * (pt4_x_float - midpoint_x) - np.sin(angle) * (pt4_y_float - midpoint_y) + midpoint_x, 0)
     pt4_rotated_y = round(np.sin(angle) * (pt4_x_float - midpoint_x) + np.cos(angle) * (pt4_y_float - midpoint_y) + midpoint_y, 0)
     #print([pt1_rotated_x, pt1_rotated_y, pt2_rotated_x, pt2_rotated_y, pt3_rotated_x, pt3_rotated_y, pt4_rotated_x,pt4_rotated_y])
     pts = np.array([[pt1_rotated_x, pt1_rotated_y], [pt2_rotated_x, pt2_rotated_y], [pt3_rotated_x, pt3_rotated_y],[pt4_rotated_x, pt4_rotated_y]], dtype=np.int32)
