@@ -43,13 +43,38 @@ def ellipsePattern(mask_size, major_axis, minor_axis, angle):
 
 def bandPattern(mask_size, width, length, angle):
     mask = np.zeros((mask_size[0], mask_size[1]))
-    midpoint_x = int((mask_size[0] / 2))
-    midpoint_y = int((mask_size[1] / 2))
-    startpoint_x = int(midpoint_x - (np.abs(length) / 2))
-    startpoint_y = int(midpoint_y + (np.abs(width) / 2))
-    endpoint_x = int(midpoint_x + (np.abs(length) / 2))
-    endpoint_y = int(midpoint_y - (np.abs(width) / 2))
-    cv2.rectangle(mask, (startpoint_x, startpoint_y), (endpoint_x, endpoint_y), 1, -1)
+    angle = -angle*np.pi/180
+    midpoint_x = (mask_size[0] / 2)
+    midpoint_y = (mask_size[1] / 2)
+    pt1_x_float = (midpoint_x - (np.abs(length) / 2))
+    pt1_y_float = (midpoint_y + (np.abs(width) / 2))
+    pt2_x_float = (midpoint_x - (np.abs(length) / 2))
+    pt2_y_float = (midpoint_y - (np.abs(width) / 2))
+    pt3_x_float = (midpoint_x + (np.abs(length) / 2))
+    pt3_y_float = (midpoint_y - (np.abs(width) / 2))
+    pt4_x_float = (midpoint_x + (np.abs(length) / 2))
+    pt4_y_float = (midpoint_y + (np.abs(width) / 2))
+    print([pt1_x_float,pt1_y_float,pt2_x_float,pt2_y_float,pt3_x_float,pt3_y_float,pt4_x_float,pt4_y_float])
+    # Point 1
+    pt1_rotated_x = np.cos(angle) * (pt1_x_float - midpoint_y) - np.sin(angle) * (pt1_y_float - midpoint_y) + midpoint_x
+    pt1_rotated_y = np.sin(angle) * (pt1_x_float - midpoint_x) + np.cos(angle) * (pt1_y_float - midpoint_y) + midpoint_y
+
+    # Point 2
+    pt2_rotated_x = np.cos(angle) * (pt2_x_float - midpoint_y) - np.sin(angle) * (pt2_y_float - midpoint_y) + midpoint_x
+    pt2_rotated_y = np.sin(angle) * (pt2_x_float - midpoint_x) + np.cos(angle) * (pt2_y_float - midpoint_y) + midpoint_y
+
+    # Point 3
+    pt3_rotated_x = np.cos(angle) * (pt3_x_float - midpoint_y) - np.sin(angle) * (pt3_y_float - midpoint_y) + midpoint_x
+    pt3_rotated_y = np.sin(angle) * (pt3_x_float - midpoint_x) + np.cos(angle) * (pt3_y_float - midpoint_y) + midpoint_y
+
+    # Point 4
+    pt4_rotated_x = np.cos(angle) * (pt4_x_float - midpoint_y) - np.sin(angle) * (pt4_y_float - midpoint_y) + midpoint_x
+    pt4_rotated_y = np.sin(angle) * (pt4_x_float - midpoint_x) + np.cos(angle) * (pt4_y_float - midpoint_y) + midpoint_y
+
+    pts = np.array([[pt1_rotated_x, pt1_rotated_y],[pt2_rotated_x,pt2_rotated_y],[pt3_rotated_x,pt3_rotated_y],[pt4_rotated_x,pt4_rotated_y]], dtype=np.int32)
+    pts.reshape((-1,1,2))
+    cv2.fillPoly(mask,[pts],1)
+
     return mask
 
 
