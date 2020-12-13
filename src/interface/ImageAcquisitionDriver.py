@@ -35,4 +35,5 @@ util.displayImage(p3image)
 
 
 
-
+p4mask = aqc.radialPattern(mask_size, 4)
+util.displayImage(p4mask)
