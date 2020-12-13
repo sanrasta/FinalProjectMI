@@ -13,9 +13,19 @@ normal_cardiac = util.normalizeImage(cardiac)
 dft_cardiac = util.getDFT(normal_cardiac)
 
 height, width = cardiac.shape
-mask_size = np.array([height, width])
+cardiac_size = np.array([height, width])
 
-p1mask = aqc.bandPattern(mask_size, 5, 100, 35)
+brain = util.loadImage("images/brain.png")
+util.displayImage(brain)
+
+normal_brain = util.normalizeImage(brain)
+
+dft_brain = util.getDFT(normal_brain)
+
+height, width = brain.shape
+brain_size = np.array([height, width])
+
+p1mask = aqc.bandPattern(cardiac_size, 5, 100, 35)
 util.displayImage(p1mask)
 
 p1applied = util.applyMask(dft_cardiac, p1mask)
@@ -25,7 +35,7 @@ util.displayImage(p1image)
 
 
 
-p3mask = aqc.cartesianPattern(mask_size, 50)
+p3mask = aqc.cartesianPattern(cardiac_size, 50)
 util.displayImage(p3mask)
 
 p3applied = util.applyMask(dft_cardiac, p3mask)
@@ -35,5 +45,10 @@ util.displayImage(p3image)
 
 
 
-p4mask = aqc.radialPattern(mask_size, 4)
+p4mask = aqc.radialPattern(cardiac_size, 8)
 util.displayImage(p4mask)
+
+p4applied = util.applyMask(dft_cardiac, p4mask)
+
+p4image = util.getImage(p4applied)
+util.displayImage(p4image)
