@@ -5,20 +5,6 @@ import src.project.ImageSynthesisNoise as noise
 import src.project.SelectiveImageAcquisition as aqc
 import src.project.Utilities as util
 
-#noisy image
-
-noisy = util.loadMatrix("images/noisyimage.npy")
-noisy_2 = noisy.astype(float)
-noisy_2_normalized = util.normalizeImage(noisy_2)
-noisy_2_dft = util.getDFT(noisy_2_normalized)
-noisy_2_write = util.writableDFT(noisy_2_dft)
-height_noisy, width_noisy = noisy_2_write.shape
-noisy_size = np.array([height_noisy, width_noisy])
-
-
-
-util.displayImage_plt(noisy_2_write)
-
 
 
 cardiac = util.loadImage("images/cardiac.jpg")
@@ -33,6 +19,7 @@ normal_brain = util.normalizeImage(brain)
 dft_brain = util.getDFT(normal_brain)
 height, width = brain.shape
 brain_size = np.array([height, width])
+
 
 
 cutoff = np.array([5, 20, 45, 60])
@@ -63,3 +50,30 @@ for k in glhp:
     p7hfimage = util.post_process_image(p7himage)
     filename = "p7_GHP_Masked_Image_" + str(k) + ".jpg"
     util.saveImage(filename, p7hfimage)
+
+
+
+noisy = util.loadMatrix("images/noisyimage.npy")
+noisy_2 = noisy.real.astype(np.float64)
+noisy_image = util.getImage(noisy_2)
+noisyfi = util.post_process_image(noisy_image)
+#util.displayImage(noisyfi)
+noisy_2_write = util.writableDFT(noisy_2)
+#util.displayImage_plt(noisy_2_write)
+height_noisy, width_noisy = noisy_2.shape
+noisy_size = np.array([height_noisy, width_noisy])
+p8mask1 = noise.butterworthLowpassFilter(noisy_size, 99, 100)
+p8mask2 = noise.gaussianLowpassFilter(noisy_size, 50)
+p8mask3 = noise.idealLowpassFilter(noisy_size, 99)
+p8applied1 = util.applyMask(noisy_2, p8mask1)
+p8applied2 = util.applyMask(noisy_2, p8mask2)
+p8applied3 = util.applyMask(noisy_2, p8mask3)
+p8image1 = util.getImage(p8applied1)
+p8image2 = util.getImage(p8applied2)
+p8image3 = util.getImage(p8applied3)
+p8fimage1 = util.post_process_image(p8image1)
+p8fimage2 = util.post_process_image(p8image2)
+p8fimage3 = util.post_process_image(p8image3)
+util.saveImage("p8_Buttersworth_99_100.jpg", p8fimage1)
+util.saveImage("p8_Gaussian_50.jpg", p8fimage1)
+util.saveImage("p8_Ideal_99.jpg", p8fimage1)
