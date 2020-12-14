@@ -8,12 +8,9 @@ cardiac = util.loadImage("images/cardiac.jpg")
 normal_cardiac = util.normalizeImage(cardiac)
 dft_cardiac = util.getDFT(normal_cardiac)
 write_dft = util.writableDFT(dft_cardiac)
-util.displayImage_plt(write_dft)
-
-#util.saveMatrix("Cardiac_DFT.jpg", dft_cardiac)
+util.saveMatrix("Cardiac_DFT.jpg", write_dft)
 height, width = cardiac.shape
 cardiac_size = np.array([height, width])
-
 
 
 
@@ -145,7 +142,7 @@ util.saveImage("p4_Brain_Masked_Image_20.jpg", p4fbi20)
 
 
 
-p5mask = aqc.radialPattern(brain_size, 20)
+p5mask = aqc.radialPattern(brain_size, 180)
 p5applied = util.applyMask(dft_brain, p5mask)
 p5image = util.getImage(p5applied)
 p5fimage = util.post_process_image(p5image)
