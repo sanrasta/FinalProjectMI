@@ -14,8 +14,7 @@ def loadImage(image_path):
 
 
 def loadMatrix(filename):
-    matrix = cv2.imread(filename, 0)
-
+    matrix = np.load(filename)
     return matrix
 
 
@@ -38,8 +37,7 @@ def normalizeImage(image):
 # Remember: the DFT its a decomposition of signals
 #  To be able to save it as an image you must convert it.
 def writableDFT(dft_image):
-
-    converted = None
+    converted = 20*np.log(np.abs(dft_image))
     return converted
 
 
@@ -50,6 +48,11 @@ def displayImage(image):
     cv2.imshow("Image", image)
     cv2.waitKey()
     cv2.destroyAllWindows()
+
+def displayImage_plt(image):
+    plt.imshow(image, cmap = 'gray')
+    plt.show()
+
 
 
 def getDFT(image):

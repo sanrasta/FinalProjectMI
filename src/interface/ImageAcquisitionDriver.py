@@ -7,9 +7,14 @@ import src.project.Utilities as util
 cardiac = util.loadImage("images/cardiac.jpg")
 normal_cardiac = util.normalizeImage(cardiac)
 dft_cardiac = util.getDFT(normal_cardiac)
+write_dft = util.writableDFT(dft_cardiac)
+util.displayImage_plt(write_dft)
+
 #util.saveMatrix("Cardiac_DFT.jpg", dft_cardiac)
 height, width = cardiac.shape
 cardiac_size = np.array([height, width])
+
+
 
 
 brain = util.loadImage("images/brain.png")
@@ -118,7 +123,7 @@ p4bm8 = aqc.radialPattern(brain_size, 8)
 p4ba8 = util.applyMask(dft_brain, p4bm8)
 p4bi8 = util.getImage(p4ba8)
 p4fbi8 = util.post_process_image(p4bi8)
-util.saveImage("p4_Brain_Masked_Image_8.jpg", p4fci8)
+util.saveImage("p4_Brain_Masked_Image_8.jpg", p4fbi8)
 
 p4bm6 = aqc.radialPattern(brain_size, 6)
 p4ba6 = util.applyMask(dft_brain, p4bm6)

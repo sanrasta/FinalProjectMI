@@ -5,6 +5,22 @@ import src.project.ImageSynthesisNoise as noise
 import src.project.SelectiveImageAcquisition as aqc
 import src.project.Utilities as util
 
+#noisy image
+
+noisy = util.loadMatrix("images/noisyimage.npy")
+noisy_2 = noisy.astype(float)
+noisy_2_normalized = util.normalizeImage(noisy_2)
+noisy_2_dft = util.getDFT(noisy_2_normalized)
+noisy_2_write = util.writableDFT(noisy_2_dft)
+height_noisy, width_noisy = noisy_2_write.shape
+noisy_size = np.array([height_noisy, width_noisy])
+
+
+
+util.displayImage_plt(noisy_2_write)
+
+
+
 cardiac = util.loadImage("images/cardiac.jpg")
 normal_cardiac = util.normalizeImage(cardiac)
 dft_cardiac = util.getDFT(normal_cardiac)
