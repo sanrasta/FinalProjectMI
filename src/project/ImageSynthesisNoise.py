@@ -43,7 +43,7 @@ def gaussianHighpassFilter(emptymask, cutoff):
     center = (rows / 2, cols / 2)
     for u in range(cols):
         for v in range(rows):
-            emptymask[u, v] = 1 - math.exp(((-distance((u, v), center) ** 2) / (2 * (cutoff ** 2))))
+            mask[u, v] = 1 - math.exp(((-distance((u, v), center) ** 2) / (2 * (cutoff ** 2))))
     return mask
 
 
