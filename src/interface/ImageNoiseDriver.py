@@ -28,26 +28,24 @@ for i in cutoff:
         p6mask = noise.butterworthLowpassFilter(brain_size, i, j)
         p6applied = util.applyMask(dft_brain, p6mask)
         p6image = util.getImage(p6applied)
-        util.displayImage(p6image)
         p6fimage = util.post_process_image(p6image)
-        filename = "p6_Masked_Image_" + i + "_" + j
+        filename = "p6_Masked_Image_" + str(i) + "_" + str(j) + ".jpg"
         util.saveImage(filename, p6fimage)
 
 
 
-for k in range(4):
-    p7lmask = noise.gaussianLowpassFilter(brain_size, 100)
+glhp = np.array([200, 40, 120, 10])
+for k in glhp:
+    p7lmask = noise.gaussianLowpassFilter(brain_size, k)
     p7lapplied = util.applyMask(dft_brain, p7lmask)
     p7limage = util.getImage(p7lapplied)
-    util.displayImage(p7limage)
     p7lfimage = util.post_process_image(p7limage)
-    filename = "p7_GLP_Masked_Image_" + k
+    filename = "p7_GLP_Masked_Image_" + str(k) + ".jpg"
     util.saveImage(filename, p7lfimage)
 
-    p7hmask = noise.gaussianHighpassFilter(brain_size, 100)
+    p7hmask = noise.gaussianHighpassFilter(brain_size, k)
     p7happlied = util.applyMask(dft_brain, p7hmask)
     p7himage = util.getImage(p7happlied)
-    util.displayImage(p7himage)
     p7hfimage = util.post_process_image(p7himage)
-    filename = "p7_GHP_Masked_Image_" + k
+    filename = "p7_GHP_Masked_Image_" + str(k) + ".jpg"
     util.saveImage(filename, p7hfimage)
