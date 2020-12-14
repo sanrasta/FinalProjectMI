@@ -31,6 +31,8 @@ for i in cutoff:
         p6image = util.getImage(p6applied)
         p6fimage = util.post_process_image(p6image)
         filename = "p6_Masked_Image_" + str(i) + "_" + str(j) + ".jpg"
+        snr_p6 = util.signalToNoise(brain, p6fimage)
+        print(filename, snr_p6)
         util.saveImage(filename, p6fimage)
 
 
@@ -77,6 +79,3 @@ p8fimage3 = util.post_process_image(p8image3)
 util.saveImage("p8_Buttersworth_99_100.jpg", p8fimage1)
 util.saveImage("p8_Gaussian_50.jpg", p8fimage1)
 util.saveImage("p8_Ideal_99.jpg", p8fimage1)
-test_snr = util.loadImage("p6_Masked_Image_5_4.jpg")
-snr_p6 = util.signalToNoise(brain,test_snr)
-print(snr_p6)
