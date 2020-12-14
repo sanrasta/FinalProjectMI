@@ -6,7 +6,6 @@ import src.project.SelectiveImageAcquisition as aqc
 import src.project.Utilities as util
 
 cardiac = util.loadImage("images/cardiac.jpg")
-util.displayImage(cardiac)
 normal_cardiac = util.normalizeImage(cardiac)
 dft_cardiac = util.getDFT(normal_cardiac)
 height, width = cardiac.shape
@@ -14,7 +13,6 @@ cardiac_size = np.array([height, width])
 
 
 brain = util.loadImage("images/brain.png")
-util.displayImage(brain)
 normal_brain = util.normalizeImage(brain)
 dft_brain = util.getDFT(normal_brain)
 height, width = brain.shape
