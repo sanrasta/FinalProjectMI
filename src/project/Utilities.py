@@ -73,8 +73,12 @@ def applyMask(image_dft, mask):
     return image_dft * mask
 
 
-def signalToNoise():
-    return False
+def signalToNoise(img1, img2):
+    mse = np.mean((img1 - img2) ** 2)
+    if mse == 0:
+        return 100
+    pixel_max = 255.0
+    return 20 * math.log10(pixel_max / math.sqrt(mse))
 
 
 # [Provide] Use this function to acomplish a good final image
