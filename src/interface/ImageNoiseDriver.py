@@ -54,7 +54,7 @@ for k in glhp:
 
 
 noisy = util.loadMatrix("images/noisyimage.npy")
-noisy_2 = noisy.real.astype(np.float64)
+noisy_2 = noisy.real.astype(np.complex128)
 noisy_image = util.getImage(noisy_2)
 noisyfi = util.post_process_image(noisy_image)
 #util.displayImage(noisyfi)
