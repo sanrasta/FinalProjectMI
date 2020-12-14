@@ -21,7 +21,7 @@ brain_size = np.array([height, width])
 
 
 
-p1mask = aqc.bandPattern(cardiac_size, 5, 100, 35)
+p1mask = aqc.bandPattern(cardiac_size, 15, 128, 35)
 p1fmask = util.post_process_image(p1mask)
 util.saveImage("p1fmask.jpg", p1fmask)
 p1applied = util.applyMask(dft_cardiac, p1mask)
