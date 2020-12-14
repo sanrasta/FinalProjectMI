@@ -15,7 +15,7 @@ def cartesianPattern(mask_size, percent):
     #rows = mask_size[1] * percent
     row_distance = int(mask_size[0] / rows)
     #row_distance = mask_size[1] / rows
-    distance_crossed = 1
+    distance_crossed = 0
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
     # distance_crossed += 5
     # cv2.line(mask,(0,distance_crossed),(mask_size[1],distance_crossed),255,1)
