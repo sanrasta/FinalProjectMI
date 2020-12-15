@@ -66,12 +66,34 @@ def butterworthHighpassFilter(emptymask, cutoff, order):
             mask[y, x] = 1 * 255 - 1 / (1 + (distance((y, x), center) / cutoff) ** (2 * order))
     return mask
 
-
 def ringLowpassFilter(emptymask, cutoff, thickness):
-    mask = None
+    rows, cols = emptymask
+    xrow, ycol = rows / 2, cols / 2
+    ring_mask = np.zeros(emptymask)
+
+    for u in range(ring_mask.shape[0]):
+        for v in range(ring_mask.shape[1]):
+            pt = np.sqrt((np.square(u - xrow)) + np.square(v - ycol))
+            if (pt <= cutoff + thickness) and (pt > (cutoff - thickness)):
+                ring_mask[u][v] = 255
+            else:
+                ring_mask[u][v] = 0
+    mask = ring_mask
     return mask
 
 
 def ringHighpassFilter(emptymask, cutoff, thickness):
-    mask = None
+    rows, cols = emptymask
+    xrow, ycol = rows / 2, cols / 2
+    ring_mask = np.zeros(emptymask)
+
+    for u in range(ring_mask.shape[0]):
+        for v in range(ring_mask.shape[1]):
+            pt = np.sqrt((np.square(u - xrow)) + np.square(v - ycol))
+            if (pt > cutoff + thickness) and (pt <= (cutoff - thickness)):
+                ring_mask[u][v] = 0
+            else:
+                ring_mask[u][v] = 255
+    mask = ring_mask
     return mask
+
